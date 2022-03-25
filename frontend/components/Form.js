@@ -4,8 +4,11 @@ import * as actionCreators from '../state/action-creators'
 
 export function Form(props) {
 
-  const onChange = evt => {
+  const { inputChange }= props
 
+  const onChange = evt => {
+    const { id, value } = evt.target
+    inputChange({ id, value })
   }
 
   const onSubmit = evt => {
@@ -23,4 +26,10 @@ export function Form(props) {
   )
 }
 
-export default connect(st => st, actionCreators)(Form)
+const mapStateToProps = state => {
+  return {
+    form: state.form
+  }
+}
+
+export default connect(mapStateToProps, actionCreators)(Form)

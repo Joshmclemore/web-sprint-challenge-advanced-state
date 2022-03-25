@@ -14,9 +14,13 @@ export function setMessage() { }
 
 export function setQuiz() { }
 
-export function inputChange() { }
+export function inputChange({ id, value }) {
+  return { type: INPUT_CHANGE, payload: { id, value }}
+}
 
-export function resetForm() { }
+export function resetForm() { 
+  return { type: RESET_FORM }
+}
 
 // ❗ Async action creators
 export function fetchQuiz() {
