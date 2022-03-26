@@ -62,11 +62,20 @@ const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
   switch (action.type) {
     case SET_INFO_MESSAGE:
+      debugger
       return action.payload
+    case SET_SELECTED_ANSWER:
+      return ''
+    // case RESET_FORM:
+    //   return action.payload
     default:
       return state
   }
 }
+
+// 'Congrats: \"', action.payload, '\" is a great question!'
+// equals
+// "\" is a great question!"
 
 const initialFormState = {
   newQuestion: '',
@@ -80,10 +89,11 @@ function form(state = initialFormState, action) {
       return {...state,
         [action.payload.id]: action.payload.value
       }
-    // case RESET_FORM:
-    //   return {
-    //     ...state, initialFormState
-    //   }
+    case RESET_FORM:
+      debugger
+      return {
+        ...state, initialFormState
+      }
     default:
       return state
   }

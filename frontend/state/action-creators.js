@@ -12,18 +12,17 @@ export function moveCounterClockwise() {
 export function selectAnswer(id) {
   return { type: SET_SELECTED_ANSWER, payload: id}
 }
-
+// check these two out !!!! ( after fixing reset form and post quiz )
 export function setMessage() { }
 
-export function setQuiz() { 
-
- }
+export function setQuiz() { }
 
 export function inputChange({ id, value }) {
   return { type: INPUT_CHANGE, payload: { id, value }}
 }
 
 export function resetForm() { 
+  debugger
   return { type: RESET_FORM }
 }
 
@@ -64,8 +63,20 @@ export function postAnswer(quiz_id, answer_id) {
     // - A response to a proper request includes `200 OK` and feedback on the answer
   }
 }
-export function postQuiz() {
+export function postQuiz(newQuestion, newTrueAnswer, newFalseAnswer) {
   return function (dispatch) {
+    axios.post('http://localhost:9000/api/quiz/new', { "question_text": newQuestion, "true_answer_text": newTrueAnswer, "false_answer_text": newFalseAnswer } )
+    .then(res => { 
+      dispatch({type: SET_INFO_MESSAGE, payload: `Congrats: ${res.data.question} is a great question!`})
+      dispatch({type: RESET_FORM})
+      // debugger
+      // console.log('new post creator:', res)
+    })
+    .catch(res => {
+      debugger
+    })
+
+    // expected payload: { "question_text": "Love JS?", "true_answer_text": "yes", "false_answer_text": "nah" }
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
     // - Dispatch the resetting of the form
