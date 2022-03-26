@@ -9,7 +9,10 @@ export function moveCounterClockwise() {
   return { type: MOVE_COUNTERCLOCKWISE }
  }
 
-export function selectAnswer() { }
+export function selectAnswer(id) {
+  console.log(id)
+  return { type: SET_SELECTED_ANSWER, payload: id}
+}
 
 export function setMessage() { }
 
@@ -27,7 +30,6 @@ export function resetForm() {
 
 // ❗ Async action creators
 export function fetchQuiz() {
-  debugger
   return function (dispatch) {
     axios.get('http://localhost:9000/api/quiz/next')
     .then(res => {
