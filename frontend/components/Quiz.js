@@ -1,14 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { fetchQuiz } from '../state/action-creators'
 
-export default function Quiz(props) {
+export function Quiz(props) {
+
+  const { quiz, fetchQuiz} = props
+
+  useEffect(()=> {
+    fetchQuiz()
+  }, [])
+
   return (
     <div id="wrapper">
       {
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        true ? (
+        quiz ? (
           <>
-            <h2>What is a closure?</h2>
-
+            <h2>{quiz.question}</h2>
+              {/* {quiz.answers.map(answer => {
+                if(answer.id)
+              })} */}
             <div id="quizAnswers">
               <div className="answer selected">
                 A function
@@ -32,3 +43,10 @@ export default function Quiz(props) {
     </div>
   )
 }
+
+const mapStateToProps = state => {
+  return {
+    quiz: state.quiz
+  }
+}
+export default connect(mapStateToProps, { fetchQuiz })(Quiz)
