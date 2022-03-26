@@ -66,16 +66,10 @@ function infoMessage(state = initialMessageState, action) {
       return action.payload
     case SET_SELECTED_ANSWER:
       return ''
-    // case RESET_FORM:
-    //   return action.payload
     default:
       return state
   }
 }
-
-// 'Congrats: \"', action.payload, '\" is a great question!'
-// equals
-// "\" is a great question!"
 
 const initialFormState = {
   newQuestion: '',
