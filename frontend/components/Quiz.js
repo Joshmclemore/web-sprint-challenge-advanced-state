@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { fetchQuiz, selectAnswer } from '../state/action-creators'
+import { fetchQuiz, selectAnswer, postAnswer } from '../state/action-creators'
 
 export function Quiz(props) {
 
-  const { quiz, fetchQuiz, selectedAnswer, selectAnswer} = props
+  const { quiz, fetchQuiz, selectedAnswer, selectAnswer, postAnswer} = props
 
   useEffect(()=> {
     fetchQuiz()
   }, [])
 
   const onAnswerClick = id => {
-    console.log('id inside click function:', id)
     selectAnswer(id)
+  }
+
+  const onSubmitClick = (quiz_id, answer_id) => {
+    debugger
+    postAnswer(quiz_id, answer_id)
+        // - Example of payload: `{ "quiz_id": "LVqUh", "answer_id": "0VEv0" }`
   }
 
   return (
@@ -24,14 +29,14 @@ export function Quiz(props) {
             <h2>{quiz.question}</h2>
               <div id="quizAnswers">         
                 {quiz.answers.map(answer => (
-                  <div className={answer.answer_id === selectedAnswer ? "selected answer" : "answer"} key={answer.id}>
+                  <div className={answer.answer_id === selectedAnswer ? "selected answer" : "answer"} id={answer.answer_id} key={answer.answer_id}>
                     {answer.text}
                     <button onClick={() => onAnswerClick(answer.answer_id)}> {answer.answer_id === selectedAnswer ? "Selected" : "Select"} </button>
                   </div>
                 ))}
               </div>
 
-            <button id="submitAnswerBtn">Submit answer</button>
+            <button id="submitAnswerBtn" onClick={() => onSubmitClick(quiz.quiz_id, selectedAnswer)} >Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
@@ -45,4 +50,4 @@ const mapStateToProps = state => {
     selectedAnswer: state.selectedAnswer
   }
 }
-export default connect(mapStateToProps, { fetchQuiz, selectAnswer })(Quiz)
+export default connect(mapStateToProps, { fetchQuiz, selectAnswer, postAnswer })(Quiz)
