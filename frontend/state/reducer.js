@@ -62,7 +62,7 @@ const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
   switch (action.type) {
     case SET_INFO_MESSAGE:
-      debugger
+      // debugger
       return action.payload
     case SET_SELECTED_ANSWER:
       return ''

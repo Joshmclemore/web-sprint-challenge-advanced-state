@@ -10,16 +10,22 @@ export function Quiz(props) {
     fetchQuiz()
   }, [])
 
+
   const onAnswerClick = id => {
     selectAnswer(id)
   }
 
   const onSubmitClick = (quiz_id, answer_id) => {
-    debugger
+    fetchQuiz()
     postAnswer(quiz_id, answer_id)
-        // - Example of payload: `{ "quiz_id": "LVqUh", "answer_id": "0VEv0" }`
   }
+  // const fieldValidation = () => {
 
+  //   var answer = document.querySelector('SELECTED')
+  //   if(answer === true) {
+  //     return true
+  //   }
+  // }
   return (
     <div id="wrapper">
       {
@@ -31,7 +37,7 @@ export function Quiz(props) {
                 {quiz.answers.map(answer => (
                   <div className={answer.answer_id === selectedAnswer ? "selected answer" : "answer"} id={answer.answer_id} key={answer.answer_id}>
                     {answer.text}
-                    <button onClick={() => onAnswerClick(answer.answer_id)}> {answer.answer_id === selectedAnswer ? "Selected" : "Select"} </button>
+                    <button onClick={() => onAnswerClick(answer.answer_id)}> {answer.answer_id === selectedAnswer ? "SELECTED" : "Select"} </button>
                   </div>
                 ))}
               </div>

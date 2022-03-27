@@ -13,7 +13,9 @@ export function selectAnswer(id) {
   return { type: SET_SELECTED_ANSWER, payload: id}
 }
 // check these two out !!!! ( after fixing reset form and post quiz )
-export function setMessage() { }
+export function setMessage() {
+
+}
 
 export function setQuiz() { }
 
@@ -22,7 +24,6 @@ export function inputChange({ id, value }) {
 }
 
 export function resetForm() { 
-  debugger
   return { type: RESET_FORM }
 }
 
@@ -31,9 +32,10 @@ export function fetchQuiz() {
   return function (dispatch) {
     axios.get('http://localhost:9000/api/quiz/next')
     .then(res => {
+      // debugger
+      dispatch({type: SET_QUIZ_INTO_STATE, payload: ""}),
       dispatch({type:SET_QUIZ_INTO_STATE, payload: res.data})
     })
-    
     .catch(err => {
       debugger
     })
@@ -46,7 +48,7 @@ export function postAnswer(quiz_id, answer_id) {
   return function (dispatch) {
     axios.post('http://localhost:9000/api/quiz/answer', {"quiz_id": quiz_id, "answer_id": answer_id})
     .then(res=> {
-      debugger
+      // dispatch({type:SET_SELECTED_ANSWER}) -----ME NEXT!!!!!!!!!
       dispatch({type:SET_INFO_MESSAGE, payload: res.data.message})
     })
     .catch(err=> {
@@ -67,7 +69,7 @@ export function postQuiz(newQuestion, newTrueAnswer, newFalseAnswer) {
   return function (dispatch) {
     axios.post('http://localhost:9000/api/quiz/new', { "question_text": newQuestion, "true_answer_text": newTrueAnswer, "false_answer_text": newFalseAnswer } )
     .then(res => { 
-      dispatch({type: SET_INFO_MESSAGE, payload: `Congrats: ${res.data.question} is a great question!`})
+      dispatch({type: SET_INFO_MESSAGE, payload: `Congrats: "${res.data.question}" is a great question!`})
       dispatch({type: RESET_FORM})
       // debugger
       // console.log('new post creator:', res)
