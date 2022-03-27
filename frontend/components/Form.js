@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { postQuiz, inputChange, resetForm } from '../state/action-creators';
 import * as yup from 'yup'
@@ -7,22 +7,23 @@ import * as yup from 'yup'
 
 export function Form(props) {
 
-  const schema = yup.object().shape({
-    newQuestion: yup.string().required('question is required').min(1)
-    // newTrueAnswer
-    // newFalseAnswer
-  })
-
-
-  // useEffect(() => {
-  //   if(form.newQuestion.length > 0 && form.newTrueAnswer.length > 0 && form.newTrueAnswer.length > 0) {
-      
-  //   }
-  //   // schema.isValid(form).then(valid => )
-  // }, [form])
-
+  const [disabled, setDisabled] = useState(true)
 
   const { inputChange, form, postQuiz, resetForm }= props
+
+  useEffect(()=> {
+    switchDisabled()
+  }, [form])
+
+  const switchDisabled = () => {
+    if(form.newQuestion.trim().length > 1 && form.newTrueAnswer.trim().length > 1 && form.newFalseAnswer.trim().length > 1) {
+      console.log('question, true, false:', form.newQuestion, form.newTrueAnswer, form.newFalseAnswer)
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+  }
+
 
   const onChange = evt => {
     const { id, value } = evt.target
@@ -40,7 +41,7 @@ export function Form(props) {
       <input maxLength={50} onChange={onChange} id="newQuestion" placeholder="Enter question" />
       <input maxLength={50} onChange={onChange} id="newTrueAnswer" placeholder="Enter true answer" />
       <input maxLength={50} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" />
-      <button id="submitNewQuizBtn" disabled={!form.newQuestion}>Submit new quiz</button>
+      <button id="submitNewQuizBtn" disabled={disabled}>Submit new quiz</button>
     </form>
   )
 }

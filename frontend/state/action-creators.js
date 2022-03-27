@@ -71,14 +71,17 @@ export function postQuiz(newQuestion, newTrueAnswer, newFalseAnswer) {
     axios.post('http://localhost:9000/api/quiz/new', { "question_text": newQuestion, "true_answer_text": newTrueAnswer, "false_answer_text": newFalseAnswer } )
     .then(res => { 
       dispatch({type: SET_INFO_MESSAGE, payload: `Congrats: "${res.data.question}" is a great question!`})
-      dispatch({RESET_FORM, payload: {        newQuestion: '',
+      dispatch({type: RESET_FORM, payload: {
+      newQuestion: '',
       newTrueAnswer: '',
-      newFalseAnswer: '',}})
+      newFalseAnswer: '',
+    }})
       // debugger
       // console.log('new post creator:', res)
     })
     .catch(res => {
       debugger
+      console.log(newQuestion, newTrueAnswer, newFalseAnswer)
     })
 
     // expected payload: { "question_text": "Love JS?", "true_answer_text": "yes", "false_answer_text": "nah" }
