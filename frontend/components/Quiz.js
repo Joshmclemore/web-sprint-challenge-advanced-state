@@ -1,18 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { fetchQuiz, selectAnswer, postAnswer } from '../state/action-creators'
 
 export function Quiz(props) {
-
+  const [disabled, setDisabled] = useState(true)
   const { quiz, fetchQuiz, selectedAnswer, selectAnswer, postAnswer} = props
 
   useEffect(()=> {
     fetchQuiz()
   }, [])
 
+  const switchDisabled = () => {
+    setDisabled(false)
+  }
 
   const onAnswerClick = id => {
     selectAnswer(id)
+    switchDisabled()
   }
 
   const onSubmitClick = (quiz_id, answer_id) => {
@@ -42,7 +46,7 @@ export function Quiz(props) {
                 ))}
               </div>
 
-            <button id="submitAnswerBtn" onClick={() => onSubmitClick(quiz.quiz_id, selectedAnswer)} >Submit answer</button>
+            <button id="submitAnswerBtn" disabled={disabled} onClick={() => onSubmitClick(quiz.quiz_id, selectedAnswer)} >Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }

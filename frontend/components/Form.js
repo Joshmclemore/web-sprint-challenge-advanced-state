@@ -32,7 +32,6 @@ export function Form(props) {
   const onSubmit = evt => {
     evt.preventDefault()
     postQuiz(form.newQuestion, form.newTrueAnswer, form.newFalseAnswer)
-    resetForm()
   }
  // expected payload: { "question_text": "Love JS?", "true_answer_text": "yes", "false_answer_text": "nah" }
   return (
