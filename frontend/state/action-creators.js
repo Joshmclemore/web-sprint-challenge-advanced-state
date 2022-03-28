@@ -24,7 +24,6 @@ export function inputChange({ id, value }) {
 }
 
 export function resetForm() { 
-  debugger
   return { type: RESET_FORM }
 }
 
@@ -35,7 +34,7 @@ export function fetchQuiz() {
     .then(res => {
       // debugger
       dispatch({type: SET_QUIZ_INTO_STATE, payload: ""}),
-      dispatch({type:SET_QUIZ_INTO_STATE, payload: res.data})
+      dispatch({type: SET_QUIZ_INTO_STATE, payload: res.data})
     })
     .catch(err => {
       debugger
@@ -66,23 +65,22 @@ export function postAnswer(quiz_id, answer_id) {
     // - A response to a proper request includes `200 OK` and feedback on the answer
   }
 }
-export function postQuiz(newQuestion, newTrueAnswer, newFalseAnswer) {
+export function postQuiz(newQuestion, newTrueAnswer, newFalseAnswer, id) {
   return function (dispatch) {
     axios.post('http://localhost:9000/api/quiz/new', { "question_text": newQuestion, "true_answer_text": newTrueAnswer, "false_answer_text": newFalseAnswer } )
     .then(res => { 
-      dispatch({type: SET_INFO_MESSAGE, payload: `Congrats: "${res.data.question}" is a great question!`})
-      dispatch({type: RESET_FORM, payload: {
-      newQuestion: '',
-      newTrueAnswer: '',
-      newFalseAnswer: '',
-    }})
-      // debugger
-      // console.log('new post creator:', res)
+      dispatch({type: SET_INFO_MESSAGE, payload: `Congrats: "${res.data.question}" is a great question!`}),
+      dispatch({type: RESET_FORM})
     })
     .catch(res => {
       debugger
-      console.log(newQuestion, newTrueAnswer, newFalseAnswer)
+      console.log("form data in action-creator: postQuiz:", newQuestion, newTrueAnswer, newFalseAnswer)
     })
+    // payload: {
+    // newQuestion: '',
+    // newTrueAnswer: '',
+    // newFalseAnswer: '',
+    // }
 
     // expected payload: { "question_text": "Love JS?", "true_answer_text": "yes", "false_answer_text": "nah" }
     // On successful POST:
