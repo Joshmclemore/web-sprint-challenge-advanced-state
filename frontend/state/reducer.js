@@ -84,7 +84,6 @@ function form(state = initialFormState, action) {
         [action.payload.id]: action.payload.value
       }
     case RESET_FORM:
-      debugger
       return initialFormState
     default:
       return state
